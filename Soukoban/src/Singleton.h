@@ -3,21 +3,16 @@
 #define SINGLETON_H
 
 // シングルトンデザインパターン
+template< class T >
 class Singleton
 {
-	//-----
-	// クラスの実際の処理
-
-
-	//-----
-	// シングルトンデザイン
-private:
+protected:
 	Singleton(){ }				// コンストラクタ抑制
 	virtual ~Singleton(){ }		// デストラクタ抑制
 
 private:
 	// 自分自身のポインタ変数(自分自身の唯一の実体)
-	static Singleton*	m_pInstance;
+	static T* m_pInstance;
 
 public:
 	// 実体を作る関数
@@ -26,7 +21,7 @@ public:
 		// すでに作られているなら新しく作らないことを保証
 		if( m_pInstance == nullptr )
 		{
-			m_pInstance = new Singleton();
+			m_pInstance = new T();
 		}
 	}
 	// 実体を破棄する関数
@@ -36,7 +31,7 @@ public:
 		m_pInstance = nullptr;
 	}
 	// 実体を取得する関数
-	static Singleton* GetInstance()
+	static T* GetInstance()
 	{
 		return m_pInstance;
 	}
@@ -46,6 +41,9 @@ public:
 		return (m_pInstance == nullptr);
 	}
 };
+// staticなメンバ変数を初期化(コンストラクタではやらない)
+template< class T >
+T* Singleton<T>::m_pInstance = nullptr;
 
 #endif	// #ifndef SINGLETON_H
 

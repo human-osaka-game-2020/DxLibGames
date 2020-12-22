@@ -2,9 +2,18 @@
 #include "ResultScene.h"
 #include "DxLib.h"
 #include "../Manager/SceneManager.h"
+#include "../Manager/InputManager.h"
+
+// 実行ステップ定義
+enum
+{
+	STEP_INPUT,		// 入力待ち
+	STEP_END,		// シーン終了
+};
 
 ResultScene::ResultScene()
 {
+	m_Step = STEP_INPUT;
 }
 
 ResultScene::~ResultScene()
@@ -13,11 +22,10 @@ ResultScene::~ResultScene()
 
 void ResultScene::Exec()
 {
-	// @@Dummy 遷移確認用の仮処理
-	m_Step++;
-	if( m_Step >= 120 )
+	switch ( m_Step )
 	{
-		SceneManager::SetNextScene( SceneID_Title );
+	case STEP_INPUT:	step_Input();	break;
+	default:							break;
 	}
 }
 
@@ -29,8 +37,18 @@ void ResultScene::Draw()
 
 bool ResultScene::IsEnd() const
 {
-	// @@Dummy 遷移確認用の仮処理
-	return ( m_Step >= 120 );
+	return ( m_Step == STEP_END );
+}
+
+// 入力受付
+void ResultScene::step_Input()
+{
+	InputManager* pInputMng = InputManager::GetInstance();
+	if( pInputMng->IsPush(KeyType_Enter) )
+	{
+		m_Step = STEP_END;
+		SceneManager::GetInstance()->SetNextScene( SceneID_Title );
+	}
 }
 
 

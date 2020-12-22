@@ -16,6 +16,10 @@ public:
 	virtual void Draw();	// 描画を行う
 
 	virtual bool IsEnd() const;	// シーンが終了したかどうかを返す
+
+private:
+	// 入力待ち
+	void step_Input();
 };
 
 #endif // #ifndef RESULT_SCENE_H

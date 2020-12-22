@@ -1,9 +1,8 @@
 ﻿
 #include "DxLib.h"
 #include "Manager/SceneManager.h"
-
-// @@Dummy シングルトンテスト用
-#include "Singleton.h"
+#include "Manager/GameManager.h"
+#include "Manager/InputManager.h"
 
 // 定数定義
 const int WINDOW_W  = 640;
@@ -30,11 +29,9 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// 管理クラスの作成
-	SceneManager* pSceneMng = new SceneManager();
-
-	// 複数インスタンス化するのを防ぎたい
-//	Singleton	single1;
-//	Singleton	single2;
+	GameManager::CreateInstance();
+	InputManager::CreateInstance();
+	SceneManager::CreateInstance();
 
 	// ゲームループ
 	while( true )
@@ -47,18 +44,20 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
 		clsDx();
 
 		// 処理
-		pSceneMng->Exec();
+		InputManager::GetInstance()->Update();
+		SceneManager::GetInstance()->Exec();
 
 		// 描画
-		pSceneMng->Draw();
+		SceneManager::GetInstance()->Draw();
 
 		// DxLibのお約束：画面更新
 		ScreenFlip();
 	}
 
 	// 管理クラスの後始末
-	delete pSceneMng;
-	pSceneMng = nullptr;
+	SceneManager::DestroyInstance();
+	InputManager::DestroyInstance();
+	GameManager::DestroyInstance();
 
 	// ＤＸライブラリ使用の終了処理
 	DxLib_End();

@@ -4,6 +4,8 @@
 
 // 継承する、基底クラスのヘッダー
 #include "SceneBase.h"
+// 定義ヘッダー
+#include "../Definition.h"
 
 // インゲームシーンクラス
 class InGameScene : public SceneBase
@@ -16,6 +18,19 @@ public:
 	virtual void Draw();	// 描画を行う
 
 	virtual bool IsEnd() const;	// シーンが終了したかどうかを返す
+
+private:
+	// 開始ジングル待ち
+	void step_StartJingle();
+	// 入力待ち
+	void step_Input();
+	// クリアジングル待ち
+	void step_ClearJingle();
+
+private:
+	int m_StageData[STAGE_HEIGHT][STAGE_WIDTH];
+	int m_PlayerX;	// 配列上のX
+	int m_PlayerY;	// 配列上のy
 };
 
 #endif // #ifndef INGAME_SCENE_H
