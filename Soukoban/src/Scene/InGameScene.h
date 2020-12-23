@@ -27,6 +27,15 @@ private:
 	// クリアジングル待ち
 	void step_ClearJingle();
 
+// 倉庫番に関係する関数群
+private:
+	// ゲームのクリア判定
+	bool IsClear() const;
+	// 初期状態にリセット
+	void Reset();
+	// 移動処理
+	void Move( DirType dir_ );
+
 private:
 	int m_StageData[STAGE_HEIGHT][STAGE_WIDTH];
 	int m_PlayerX;	// 配列上のX

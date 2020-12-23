@@ -41,5 +41,17 @@ enum ObjectType
 	ObjectType_SetCrate = 7,	// 7
 };
 
+// 移動方向
+enum DirType
+{
+	DirType_Up,		// 上
+	DirType_Down,	// 下
+	DirType_Left,	// 左
+	DirType_Right,	// 右
+
+	// 画像読み込みで使用する
+	DirType_Max,
+};
+
 #endif	// #ifndef DEFINITION_H
 
